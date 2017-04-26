@@ -32,6 +32,12 @@ def get_student():
     # return "{acct} is the GitHub account for {first} {last}".format(
     #     acct=github, first=first, last=last)
 
+@app.route("/new-student")
+def new_student_form():
+    """Show form for creating a student."""
+
+    return render_template("new_student.html")
+
 
 @app.route("/student-add", methods=['POST'])
 def student_add():
@@ -41,11 +47,16 @@ def student_add():
     last_name = request.form.get("last_name")
     github = request.form.get("github")
 
-    first_name, last_name, github = hackbright.make_new_student(first_name, 
-                                                                last_name, 
-                                                                github)
+    hackbright.make_new_student(first_name, last_name, github)
 
-    pass
+    return render_template("add_confirmation.html", github=github)
+
+@app.route("/student-info")
+def show_student_info():
+    """Show information for newly added student."""
+
+
+    return render_template("student_info.html")
 
 
 
